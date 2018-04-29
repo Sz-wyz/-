@@ -1,0 +1,45 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+const int maxcol = 60;
+const int maxn = 105;
+string filenames[maxn];
+//输出字符串s，长度不足len时补字符extra
+void print(const string& s, int len, char extra)
+{
+	cout << s;
+	for (int i = 0; i < len - s.length(); i++)
+		cout << extra;
+}
+int main()
+{
+	int n;
+	while (cin >> n)
+	{
+		int M = 0;
+		for (int i = 0; i < n; i++)
+		{
+			cin >> filenames[i];
+			M = max(M, (int)filenames[i].length());//STL的max
+		}
+		int cols = (maxcol - M) / (M + 2) + 1;//计算列数
+		int rows = n % cols == 0 ? n / cols:n / cols + 1;//计算行数
+		print("", 60, '-');//打印六十个-
+		printf("\n");
+		sort(filenames, filenames + n);//排序
+		for (int r = 0; r < rows; r++)
+		{
+			for (int c = 0; c < cols; c++)
+			{
+				int idx = c * rows + r;//？？
+				if (idx < n)
+					print(filenames[idx], c == cols - 1 ? M : M + 2, ' ');
+			}
+			cout << '\n';
+		}
+
+	}
+	system("pause");
+	return 0;
+}
